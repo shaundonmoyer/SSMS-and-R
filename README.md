@@ -17,6 +17,12 @@ by command line interface in most databse management systems, in my case I am us
 
 Essentially, SQL is the main language that allows allows your database server to store and edit data within it.
 
-## FracFouc Registry and Database
+## FracFoucs Registry and Database
 
-Is the national registry for hydraulic fracturing chemical data. 
+FracFocus.org is the national registry for hydraulic fracturing chemical data. The website provides a user friendly interface in which chemical data can easily be searched by state, well API, chemical additive etc. The downfall to this is the website returns the chemical 
+data in the form of pdfs which are tedious to sort through and in most cases you will recieve thousands of matches (data nightmare). The
+entire database can be downloaded as a .bak or backup file and then restored using SSMS. Once resotred in SSMS, you have created your own
+SQL instance or "internal server" that hosts the database directly from your computer.
+
+## Connecting R to SSMS
+
