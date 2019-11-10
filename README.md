@@ -26,3 +26,21 @@ SQL instance or "internal server" that hosts the database directly from your com
 
 ## Connecting R to SSMS
 
+
+### Load ODBC library
+```
+library(odbc)
+```
+This package allows R to connect to any database that is an Open Database Connectivity Drivers such as SSMS.
+
+### Connect to your database
+```
+con <- dbConnect(odbc(),Driver="SQL Server",Server="localhost\\SQLEXPRESS", Database="FracFocusRegistry", Trusted_Connection="True")
+```
+Now that we are connected lets see if can get the same results our database is showing us. Here I will pull in the entire Registry Upload Purpose Table into R
+
+```
+RUP <- data.table(dbGetQuery(con, "SELECT * FROM [FracFocusRegistry].[dbo].[RegistryUploadPurpose]"))
+```
+
+
