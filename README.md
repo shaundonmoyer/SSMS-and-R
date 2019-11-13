@@ -22,7 +22,7 @@ Essentially, SQL is the main language that allows allows your database server to
 Once your database is restored in your SSMS, get an understanding of how it is structured. Now that you understand the layout of your database and the table associated with it, you can execute a simple query.
 
 ```
-"SELECT * FROM RegistryUploadIngredients Where IngredientName = 'Acetic Acid'
+SELECT * FROM RegistryUploadIngredients Where IngredientName = 'Acetic Acid'
 ```
 
 ## FracFoucs Registry and Database
