@@ -17,6 +17,14 @@ by command line interface in most databse management systems, in my case I am us
 
 Essentially, SQL is the main language that allows allows your database server to store and edit data within it.
 
+## Lets take a lot at SSMS
+
+Once your database is restored in your SSMS, get an understanding of how it is structured. Now that you understand the layout of your database and the table associated with it, you can execute a simple query.
+
+```
+"SELECT * FROM RegistryUploadIngredients Where IngredientName = 'Acetic Acid'
+```
+
 ## FracFoucs Registry and Database
 
 FracFocus.org is the national registry for hydraulic fracturing chemical data. The website provides a user friendly interface in which chemical data can easily be searched by state, well API, chemical additive etc. The downfall to this is the website returns the chemical 
@@ -43,4 +51,34 @@ Now that we are connected lets see if can get the same results our database is s
 RUP <- data.table(dbGetQuery(con, "SELECT * FROM [FracFocusRegistry].[dbo].[RegistryUploadPurpose]"))
 ```
 
+Remember the Acetic Acid example, lets pull it directly into R instead.
 
+```
+Acetic <- data.table(dbGetQuery(con, "SELECT * FROM RegistryUploadIngredients Where IngredientName = 'Acetic Acid';"))
+```
+Now that the data is into R, it makes manipulating significantly easier.
+
+## Example from my project
+
+Lets query all the ingredients that serve as a Breaker
+
+```
+Breaker <- data.table(dbGetQuery(con, "SELECT * FROM RegistryUploadPurpose WHERE Purpose = 'Breaker';"))
+```
+
+Now lets count how many times each Breaker is reported in this table
+
+```
+library(plyr)
+Br_Freq <- count(Breaker, "TradeName")
+```
+By putting the table in descending order we can see the most 10 most reported Breakers, lets make a plot.
+
+```
+top10_Br <- Br_Freq[c(610,578,315,469,374,313,561,452,222,318),]
+
+Br_Plot <- ggplot(top10_Br, aes(x=TradeName, y=freq)) + geom_bar(stat="identity", color="blue",fill="white") + 
+     labs(x="TradeName", y="Frequency",title="10 Most Used Breakers in FracFocus")+geom_text(aes(label=freq), vjust=1.6, color="black", size=3.5)+theme(axis.text.x=element_text(size=10,angle=45,hjust=1,vjust=1))
+
+Br_Plot
+```
